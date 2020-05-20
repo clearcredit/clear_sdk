@@ -3,6 +3,25 @@ function hello() {
 }
 
 
+function renderAttrTable() {
+ 	var table = document.getElementById('demo-table');
+ 	var devInfo = getDeviceInfo();
+
+ 	Object.keys(devInfo).forEach(function(key) {
+		var tr = document.createElement('tr');
+        
+        var td1 = document.createElement('td');
+        td1.appendChild(document.createTextNode(key));
+        tr.appendChild(td1);
+
+        var td2 = document.createElement('td');
+        td2.appendChild(document.createTextNode(devInfo[key]));
+        tr.appendChild(td2);
+        table.appendChild(tr);
+	});
+}
+
+
 function debugDevInfo() {
 	console.log(getDeviceInfo());
 }
@@ -10,14 +29,17 @@ function debugDevInfo() {
 
 function getDeviceInfo() {
 	var deviceInfo = {
-		userAgent: getUserAgent(),
-		httpHeaders: getHTTPHeaders(),
-		plugins: getPlugins(),
-		timezoneOffset: getTimezoneOffset(),
-		timezone: getTimezone(),
-		screenSize: getScreenSizeColorDepth(),
-		systemFonts: getSystemFonts(),
-		cookiesEnabled: areCookiesEnabled()
+		"userAgent": getUserAgent(),
+		"httpHeaders": JSON.stringify(getHTTPHeaders()),
+		"plugins": getPlugins(),
+		"timezoneOffset": getTimezoneOffset(),
+		"timezone": getTimezone(),
+		"screenSize": getScreenSizeColorDepth(),
+		"systemFonts": getSystemFonts(),
+		"cookiesEnabled": areCookiesEnabled(),
+		"language": getLanguage(),
+		"platform": getPlatform(),
+		"oscpu": getOSCPUInfo(),
 	};
 
 	return deviceInfo
@@ -45,7 +67,6 @@ function getHTTPHeaders() {
 	    var value = thisItem.substring(thisItem.indexOf(':')+1);
 		data[key] = value;
 	}
-
 	return data;
 }
 
@@ -96,3 +117,23 @@ function areCookiesEnabled() {
     }
     return cookieEnabled;
 }
+
+
+function getLanguage() {
+	return navigator.language || navigator.userLanguage;
+}
+
+
+
+function getPlatform() {
+	return navigator.platform;
+}
+
+
+
+function getOSCPUInfo() {
+	return window.navigator.oscpu;
+}
+
+
+
