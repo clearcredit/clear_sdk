@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title></title>
+
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="icon" href="images/favicon.png" />
+  </head>
+
+  <body>
+    <table id="demo-table">
+      <tr>
+        <th>Attribute</th>
+        <th>Value</th>
+      </tr>
+    </table>
+
+    <br/><br/>
+
+    <label for="email_address_input">Your email address:</label>
+    <input type="text" id="email_address_input" value="angelos.kapsimanis@protonmail.com"></input>
+    <br/><br/>
+
+    <button id="retrieve_instant_score" data-url="/">Find your Clear Instant Score</button>
+    <br/><br/>
+    <label for="instant_score">Your Clear Instant Score:</label>
+    <input type="text" id="instant_score" value=""></input>
+    <br/><br/>
+
+    <button id="retrieve_email_score" data-url="/">Find your Clear Email Score</button>
+    <br/><br/>
+      <label for="email_score">Your Clear Email Score:</label>
+    <input type="text" id="email_score" value=""></input>
+
+
+    <script type = "text/javascript" src="js/clear_v0.js"></script>
+    <script type = "text/javascript" src="js/demo_v0.js"></script>
+    <script type = "text/javascript">
+      renderAttrTable();
+    </script>
+  </body>
+</html>

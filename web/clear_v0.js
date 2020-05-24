@@ -1,31 +1,3 @@
-function hello() {
-	console.log("Hello world!");	
-}
-
-
-function renderAttrTable() {
- 	var table = document.getElementById('demo-table');
- 	var devInfo = getDeviceInfo();
-
- 	Object.keys(devInfo).forEach(function(key) {
-		var tr = document.createElement('tr');
-        
-        var td1 = document.createElement('td');
-        td1.appendChild(document.createTextNode(key));
-        tr.appendChild(td1);
-
-        var td2 = document.createElement('td');
-        td2.appendChild(document.createTextNode(devInfo[key]));
-        tr.appendChild(td2);
-        table.appendChild(tr);
-	});
-}
-
-
-function debugDevInfo() {
-	console.log(getDeviceInfo());
-}
-
 
 function getDeviceInfo() {
 	var deviceInfo = {
@@ -53,8 +25,8 @@ function getUserAgent() {
 
 function getHTTPHeaders() {
 	var req = new XMLHttpRequest();
-	req.open('GET', document.location, false);
-	req.send(null);
+	req.open('GET', document.location);
+	req.send();
 
 	var data = new Object();
 	var headers = req.getAllResponseHeaders().toLowerCase();
@@ -136,4 +108,59 @@ function getOSCPUInfo() {
 }
 
 
+function requestInstantScore(apiKey, emailAddress, apiVersion = "0") {
+	endpointUrl = "https://api.clearhq.ai/instant-score/v" + apiVersion + "/score";
+	var xhr = new XMLHttpRequest();
 
+	xhr.onload = function() {
+		if (xhr.status >= 200 && xhr.status < 300) {
+			console.log('success!', xhr);
+			return xhr.responseText;
+
+		} else {
+			console.log('The request failed!');
+			return {};
+		}
+	};
+
+	devInfo = getDeviceInfo();
+
+	reqBody = {
+		"user_agent": devInfo["userAgent"],
+		"email": emailAddress,
+		"do_not_track": "no"
+	};
+
+	xhr.open("POST", endpointUrl, true);
+	xhr.setRequestHeader("clearhq-key", apiKey);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xhr.send(JSON.stringify(reqBody));
+}
+
+
+function requestEmailScore(apiKey, emailAddress, apiVersion = "0") {
+	endpointUrl = "https://api.clearhq.ai/email-score/v" + apiVersion + 
+					"/score?email=" + emailAddress;
+	var xhr = new XMLHttpRequest();
+
+
+	console.log(emailAddress);
+
+	xhr.onload = function() {
+		if (xhr.status >= 200 && xhr.status < 300) {
+			console.log('success!', xhr);
+			return xhr.responseText;
+
+		} else {
+			console.log('The request failed!');
+			return {};
+		}
+	};
+
+	xhr.open("GET", endpointUrl);
+	xhr.setRequestHeader("clearhq-key", apiKey);
+	xhr.setRequestHeader("Accept", "application/json");
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xhr.send();
+}
