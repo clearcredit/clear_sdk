@@ -27,9 +27,27 @@ function debugDevInfo() {
 	console.log(getDeviceInfo());
 }
 
+function testxhr() {
+	var data = JSON.stringify({"user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:74.0) Gecko/20100101 Firefox/74.0","email":"lamine@cheloufi.de","do_not_track":"no"});
+
+	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
+
+	xhr.addEventListener("readystatechange", function() {
+	  if(this.readyState === 4) {
+	    return this.responseText;
+	  }
+	});
+
+	xhr.open("POST", "https://api.clearhq.ai/instant-score/v0/score");
+	xhr.setRequestHeader("clearhq-key", "*your-api-key*");
+	xhr.setRequestHeader("Content-Type", "application/json");
+
+	xhr.send(data);
+}
 
 (function () {
-	var apiKey = "d2bc1c3f-0276-412f-96e7-dc2c69301ac7";	
+	var apiKey = 'd2bc1c3f-0276-412f-96e7-dc2c69301ac7';	
 
 	/*
 		Instance Score example
@@ -38,8 +56,9 @@ function debugDevInfo() {
 
 	instScoreBtn.addEventListener('mousedown', function() {
 		var emailAddress = document.getElementById('email_address_input').value;
-		response = 
-		requestInstantScore(apiKey, emailAddress);
+		// response = 
+		// requestInstantScore(apiKey, emailAddress);
+		testxhr();
 	}, false);
 
 
@@ -50,7 +69,7 @@ function debugDevInfo() {
 
 	emailScoreBtn.addEventListener('mousedown', function() {
 		var emailAddress = document.getElementById('email_address_input').value;
-		response = requestEmailScore(apiKey, emailAddress);
+		requestEmailScore(apiKey, emailAddress);
 	}, false);
 
 })(window, document);
