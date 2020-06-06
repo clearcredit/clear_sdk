@@ -19,12 +19,13 @@ function renderAttrTable() {
         td2.appendChild(document.createTextNode(devInfo[key]))
         tr.appendChild(td2)
         table.appendChild(tr)
-	});
+	})
 }
 
 
 (function () {
-	var apiKey = '**your-api-key**'
+
+	var apiKey = 'your-api-key'
 
 	/*
 		Instance Score example
